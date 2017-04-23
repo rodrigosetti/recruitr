@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li>
+        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
+    </li>
+    <li class="pull-right">
+        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
+    </li>
+</ol>
+
+<h1>{% trans "Welcome" %}</h1>
+
+<p><a href="{% url "coding-problem-list" %}">{% trans "Go to problems" %}</a></p>
+
+{% endblock %}

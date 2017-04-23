@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li>
+        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
+    </li>
+    <li class="active">{{ problem.title }}</li>
+    <li class="pull-right">
+        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
+    </li>
+</ol>
+
+<h1>{{ problem.title }}</h1>
+
+<p>
+    {{ problem.statement|linebreaks }}
+</p>
+
+{% if problem.specification %}
+    <h2>{% trans "Specification" %}</h2>
+    <p>
+        {{ problem.specification|linebreaks }}
+    </p>
+{% endif %}
+
+{% if examples %}
+    <h2>{% trans "Examples" %}</h2>
+    {% for io in examples %}
+        <div class="row">
+            <div class="col-md-6">
+                <h3>{% trans "input" %}</h3>
+                <div class="well">
+                    {{ io.input|linebreaks }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>{% trans "output" %}</h3>
+                <div class="well">
+                    {{ io.output|linebreaks }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<hr/>
+<h2>{% trans "Submit your solution" %}</h2>
+
+<form class="form-horizontal" role="form" method="post">
+  {% csrf_token %}
+  {% with submission_form as form %}
+    {% include 'bootstrap_form.html' %}
+  {% endwith %}
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">{% trans "Submit Solution" %}</button>
+    </div>
+  </div>
+</form>
+
+{% if submissions %}
+    <hr/>
+    <h2>{% trans "Submission history" %}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{% trans "time" %}</th>
+                <th>{% trans "language" %}</th>
+                <th>{% trans "status" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.submission_time }}</td>
+                <td>{{ submission.get_language_display }}</td>
+                <td>{{ submission.get_status_display }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}
+s

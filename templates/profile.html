@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li>
+        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
+    </li>
+    <li class="pull-right">
+        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
+    </li>
+</ol>
+
+<form enctype="multipart/form-data"
+      class="form-horizontal"
+      role="form"
+      method="post">
+  {% csrf_token %}
+
+  {% with user_form as form %}
+    {% include 'bootstrap_form.html' %}
+  {% endwith %}
+  {% with candidate_form as form %}
+    {% include 'bootstrap_form.html' %}
+  {% endwith %}
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">{% trans "Save Changes" %}</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

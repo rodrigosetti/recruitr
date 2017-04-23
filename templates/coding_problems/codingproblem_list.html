@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li>
+        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
+    </li>
+    <li class="pull-right">
+        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
+    </li>
+</ol>
+
+<h1>{% trans "Problems" %}</h1>
+
+<div class="list-group">
+    {% for problem in object_list %}
+    <a href="{% url "coding-problem-detail" problem.slug %}"
+       class="list-group-item">{{ problem.title }}</a>
+    {% endfor %}
+</div>
+
+{% endblock %}
