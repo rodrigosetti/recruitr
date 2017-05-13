@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CodingProblem, CodeSubmission, InputOutput
+from .models import CodingProblem, InputOutput
 
 
 class InputOutputInline(admin.TabularInline):

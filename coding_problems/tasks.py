@@ -94,7 +94,7 @@ def judge_code_submission(code_submission_id):
                                                 code_submission.language,
                                                 input_output.input.encode('utf-8'))
 
-        code_submission.error_output = stderr.decode('utf-8')[-100:]
+        code_submission.error_output = stderr.decode('utf-8')[-1000:]
 
         if is_timeout:
             logger.info("timeout")
