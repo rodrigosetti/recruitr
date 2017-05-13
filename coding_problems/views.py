@@ -40,6 +40,12 @@ def coding_problem(request, slug):
                            _('Please correct the error below.'))
     else:
         submission_form = CodeSubmissionForm()
+
+        latest_submission = problem.user_submissions(request.user).earliest()
+        if latest_submission:
+            submission_form.initial["language"] = latest_submission.language
+            submission_form.initial["code"] = latest_submission.code
+
         return render(request, 'candidates/codingproblem_detail.html', {
             'problem': problem,
             'submission_form': submission_form,

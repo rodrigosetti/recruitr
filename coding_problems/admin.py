@@ -8,6 +8,8 @@ class InputOutputInline(admin.TabularInline):
 
 
 class CodingProblemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'public')
+    list_filter = ('public',)
     prepopulated_fields = {"slug": ("title",)}
     inlines = [InputOutputInline]
 

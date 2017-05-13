@@ -78,14 +78,17 @@
             <tr>
                 <td>{{ submission.submission_time }}</td>
                 <td>{{ submission.get_language_display }}</td>
+                <td>{{ submission.get_status_display }}</td>
                 <td>
+                    {% if submission.error_output %}
                     <a class="btn btn-primary" role="button" data-toggle="collapse" href="#error-{{ submission.id }}">
-                        {{ submission.get_status_display }}
+                        {% trans "error output" %}
                     </a>
+                    {% endif %}
                 </td>
             </tr>
             <tr class="collapse" id="error-{{ submission.id }}">
-                <td colspan="3">
+                <td colspan="4">
                     <div class="well">
                         {{ submission.error_output }}
                     </div>

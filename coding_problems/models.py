@@ -63,3 +63,6 @@ class CodeSubmission(models.Model):
 
     def __str__(self):
         return f"{self.problem} submission ({self.status})"
+
+    class Meta:
+        get_latest_by = "submission_time"

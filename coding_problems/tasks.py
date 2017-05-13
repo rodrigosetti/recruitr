@@ -3,7 +3,7 @@ from celery import shared_task
 from celery.utils.log import get_task_logger
 from subprocess import Popen, PIPE
 import os
-import tempfile
+from itertools import count
 import uuid
 
 logger = get_task_logger(__name__)
@@ -88,7 +88,7 @@ def judge_code_submission(code_submission_id):
     code_submission.save()
 
     # create a temp folder with all input files
-    for input_output in code_submission.problem.inputoutput_set.all():
+    for ion, input_output in enumerate(code_submission.problem.inputoutput_set.all()):
         logger.info("Running input/output: %s" % input_output)
         (stdout, stderr, is_timeout) = run_code(code_submission.code,
                                                 code_submission.language,
@@ -108,10 +108,29 @@ def judge_code_submission(code_submission_id):
             logger.info("output too large")
             code_submission.status = 'L'  # status=OUTPUT TOO LARGE
             break
-        elif stdout.decode('utf-8').strip() != input_output.output.strip():
-            logger.info("failure")
-            code_submission.status = 'F'  # status=FAILURE
-            break
+        else:
+            output_lines = stdout.decode('utf-8').strip().splitlines()
+            expected_lines = input_output.output.strip().splitlines()
+            n_output = len(output_lines)
+            n_expected = len(expected_lines)
+
+            if n_output != n_expected:
+                failure = True
+                code_submission.error_output = f"expected {n_expected} lines, but got {n_output}, of case #{ion+1}%s" % (" (example)" if input_output.example else "")
+                code_submission.status = 'F'  # status=FAILURE
+                break
+
+            failure = False
+            for n, output_line, expected_line in zip(count(1), output_lines, expected_lines):
+                if output_line.strip() != expected_line:
+                    logger.info("failure")
+                    failure = True
+                    code_submission.error_output = f"mismatch at line {n}, of case #{ion+1}%s" % (" (example)" if input_output.example else "")
+                    break
+
+            if failure:
+                code_submission.status = 'F'  # status=FAILURE
+                break
 
     else:
         logger.info("success")
