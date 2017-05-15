@@ -78,10 +78,26 @@
             <tr>
                 <td>{{ submission.submission_time }}</td>
                 <td>{{ submission.get_language_display }}</td>
-                <td>{{ submission.get_status_display }}</td>
+                <td>
+                    {% if submission.status == "S" %}
+                    <span class="glyphicon glyphicon-ok"  aria-hidden="true"></span>
+                    {% elif submission.status == "E" %}
+                    <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                    {% elif submission.status == "L" %}
+                    <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                    {% elif submission.status == "F" %}
+                    <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                    {% elif submission.status == "Q" %}
+                    <span class="glyphicon glyphicon-refresh"  aria-hidden="true"></span>
+                    {% elif submission.status == "R" %}
+                    <span class="glyphicon glyphicon-refresh"  aria-hidden="true"></span>
+                    {% endif %}
+
+                    {{ submission.get_status_display }}
+                </td>
                 <td>
                     {% if submission.error_output %}
-                    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#error-{{ submission.id }}">
+                    <a class="btn btn-default" role="button" data-toggle="collapse" href="#error-{{ submission.id }}">
                         {% trans "error output" %}
                     </a>
                     {% endif %}
