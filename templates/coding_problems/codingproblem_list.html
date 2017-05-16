@@ -5,14 +5,14 @@
 {% block content %}
 <ol class="breadcrumb">
     <li>
-        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
+        <a href="{% url "coding-problem-list" %}">{% trans "Challenges" %}</a>
     </li>
     <li class="pull-right">
         <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
     </li>
 </ol>
 
-<h1>{% trans "Problems" %}</h1>
+<h1>{% trans "Challenges" %}</h1>
 
 <div class="list-group">
     {% for problem in object_list %}

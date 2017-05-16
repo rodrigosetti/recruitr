@@ -2,17 +2,21 @@
 {% load i18n %}
 
 {% block content %}
-<ol class="breadcrumb">
-    <li>
-        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
-    </li>
-    <li class="pull-right">
-        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
-    </li>
-</ol>
+<div class="jumbotron">
+    <h1>{% trans "Welcome" %}</h1>
 
-<h1>{% trans "Welcome" %}</h1>
+    <p>
+        Welcome to our Coding Challenge platform! Feel free to browser our
+        problems and submit your coding solution! Also, please make sure to add
+        your contact information (and resume) so we can reach out to you for our
+        open engineering positions.
+    </p>
+    <p>
+        We are looking for engineers that enjoy solving problems using code. Welcome aboard!
+    </p>
 
-<p><a href="{% url "coding-problem-list" %}">{% trans "Go to problems" %}</a></p>
-
+    <p>
+        <a class="btn btn-primary btn-lg" href="{% url "coding-problem-list" %}">{% trans "Browse Challenges" %}</a>
+    </p>
+</div>
 {% endblock %}

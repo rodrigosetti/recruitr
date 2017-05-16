@@ -30,6 +30,11 @@ def coding_problem(request, slug):
             # send task
             judge_code_submission.delay(submission.id)
 
+            # keep only the top 10 submissions
+            for n, s in enumerate(CodeSubmission.objects.filter(user=request.user, problem=problem).order_by("submission_time").reverse()):
+                if n >= 10:
+                    s.delete()
+
             messages.success(request,
                              _('Your code was successfully submitted'))
             return redirect('coding-problem-detail', slug)
