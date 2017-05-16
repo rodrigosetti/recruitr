@@ -46,10 +46,12 @@ def coding_problem(request, slug):
     else:
         submission_form = CodeSubmissionForm()
 
-        latest_submission = problem.user_submissions(request.user).earliest()
-        if latest_submission:
+        try:
+            latest_submission = problem.user_submissions(request.user).earliest()
             submission_form.initial["language"] = latest_submission.language
             submission_form.initial["code"] = latest_submission.code
+        except CodeSubmission.DoesNotExist:
+            pass
 
         return render(request, 'candidates/codingproblem_detail.html', {
             'problem': problem,
