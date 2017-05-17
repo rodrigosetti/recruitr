@@ -85,7 +85,7 @@ def run_code(code, language, stdin):
         command = ['gtimeout', '-s', 'SIGKILL', '60',
                    'docker', 'run', '--rm', '--name', container_name,
                    '--network=none', '--interactive',
-                   f'--volume={host_code_filename}:/workspace/{filename}:ro']
+                   '--volume={}:/workspace/{}:ro'.format(host_code_filename, filename)]
 
         if read_only:
             command.append('--read-only')
@@ -157,7 +157,7 @@ def judge_code_submission(code_submission_id):
 
             if n_output != n_expected:
                 failure = True
-                code_submission.error_output = f"expected {n_expected} lines, but got {n_output}, of case #{ion+1}%s" % (" (example)" if input_output.example else "")
+                code_submission.error_output = "expected {} lines, but got {}, of case #{}{}".format(n_expected, n_output, ion+1, " (example)" if input_output.example else "")
                 code_submission.status = 'F'  # status=FAILURE
                 break
 
@@ -166,7 +166,7 @@ def judge_code_submission(code_submission_id):
                 if output_line.strip() != expected_line:
                     logger.info("failure")
                     failure = True
-                    code_submission.error_output = f"mismatch at line {n}, of case #{ion+1}%s" % (" (example)" if input_output.example else "")
+                    code_submission.error_output = "mismatch at line {}, of case #{}{}".format(n, ion+1, " (example)" if input_output.example else "")
                     break
 
             if failure:

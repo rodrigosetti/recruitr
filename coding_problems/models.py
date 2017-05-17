@@ -72,7 +72,7 @@ class CodeSubmission(models.Model):
     error_output = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.problem} submission ({self.status})"
+        return "{} submission ({})".format(self.problem, self.status)
 
     class Meta:
         get_latest_by = "submission_time"
