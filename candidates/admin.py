@@ -1,14 +1,16 @@
-from .models import Candidate
 from coding_problems.models import CodeSubmission
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
+from recruitr.admin import admin_site
+from .models import Candidate
+
 
 class CodeSubmissionInline(admin.StackedInline):
     model = CodeSubmission
-
     readonly_fields = ('problem', 'language', 'code', 'error_output',)
+    ordering = ('-submission_time',)
 
     def has_add_permission(self, obj):
         return False
@@ -33,5 +35,4 @@ class ExtendedUserAdmin(UserAdmin):
     get_status.short_description = 'Candidate status'
 
 
-admin.site.unregister(User)
-admin.site.register(User, ExtendedUserAdmin)
+admin_site.register(User, ExtendedUserAdmin)

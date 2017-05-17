@@ -3,15 +3,15 @@
 from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
 from candidates.views import update_candidate
 from coding_problems.views import coding_problem, CodingProblemListView
+from .admin import admin_site
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin_site.urls),
     url('', include('social_django.urls', namespace='social')),
 
     url(r'^$', TemplateView.as_view(template_name='index.html')),

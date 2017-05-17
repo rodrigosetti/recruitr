@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from recruitr.admin import admin_site
 from .models import CodingProblem, InputOutput
 
 
@@ -14,4 +15,4 @@ class CodingProblemAdmin(admin.ModelAdmin):
     inlines = [InputOutputInline]
 
 
-admin.site.register(CodingProblem, CodingProblemAdmin)
+admin_site.register(CodingProblem, CodingProblemAdmin)
