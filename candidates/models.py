@@ -1,8 +1,10 @@
+import os
+
+from django.conf import settings
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf import settings
-import os
 
 
 def determine_upload_location(instance, filename):
@@ -41,7 +43,10 @@ class Candidate(models.Model):
     phone = models.CharField(max_length=50, unique=True)
     referrer = models.CharField(max_length=100, blank=True, null=True)
 
-    resume = models.FileField(blank=True, null=True, upload_to=determine_upload_location)
+    resume = models.FileField(blank=True,
+                              null=True,
+                              upload_to=determine_upload_location,
+                              validators=[FileExtensionValidator(['pdf', 'txt', 'doc', 'docx'])])
     resume_url = models.URLField(blank=True, null=True)
     website = models.URLField(blank=True, null=True)
 
