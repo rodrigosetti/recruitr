@@ -40,7 +40,7 @@ class Candidate(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     level = models.CharField(max_length=3, choices=LEVEL_CHOICES, blank=True, null=True)
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default="NEW")
-    phone = models.CharField(max_length=50, unique=True)
+    phone = models.CharField(max_length=50)
     referrer = models.CharField(max_length=100, blank=True, null=True)
 
     resume = models.FileField(blank=True,
