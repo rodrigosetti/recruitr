@@ -17,12 +17,12 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='index.html')),
 
     url(
-        r'^problems?/(?P<slug>[-\w]+)/$',
+        r'^challenges?/(?P<slug>[-\w]+)/$',
         coding_problem,
         name='coding-problem-detail'),
 
     url(
-        r'^problems/$',
+        r'^challenges/$',
         CodingProblemListView.as_view(),
         name='coding-problem-list'),
 

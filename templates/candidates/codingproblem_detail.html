@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load humanize %}
 
 {% block content %}
 {% include "navbar.html" %}
@@ -59,11 +60,11 @@
 
     {% if submissions %}
         <hr/>
-        <h2>{% trans "Submission history" %}</h2>
+        <h2>{% trans "Your submissions" %}</h2>
         <table class="table">
             <thead>
                 <tr>
-                    <th>{% trans "time" %}</th>
+                    <th>{% trans "when" %}</th>
                     <th>{% trans "language" %}</th>
                     <th>{% trans "status" %}</th>
                 </tr>
@@ -71,7 +72,7 @@
             <tbody>
             {% for submission in submissions %}
                 <tr>
-                    <td>{{ submission.submission_time }}</td>
+                    <td>{{ submission.submission_time|naturaltime }}</td>
                     <td>{{ submission.get_language_display }}</td>
                     <td>
                         {% if submission.status == "S" %}
