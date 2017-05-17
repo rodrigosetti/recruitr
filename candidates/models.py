@@ -65,7 +65,3 @@ def create_user_candidate(sender, instance, created, **kwargs):
     if created:
         Candidate.objects.create(user=instance)
 
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_candidate(sender, instance, **kwargs):
-    instance.candidate.save()

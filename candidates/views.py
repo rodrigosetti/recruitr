@@ -1,9 +1,10 @@
-from .forms import UserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
-from .forms import CandidateForm
+
+from .forms import UserForm, CandidateForm
+from .models import Candidate
 
 
 @login_required
@@ -23,7 +24,10 @@ def update_candidate(request):
             messages.error(request, _('Please correct the error below.'))
     else:
         user_form = UserForm(instance=request.user)
-        candidate_form = CandidateForm(instance=request.user.candidate)
+
+        candidate, created = Candidate.objects.get_or_create(user=request.user)
+
+        candidate_form = CandidateForm(instance=candidate)
     return render(request, 'profile.html', {
         'user_form': user_form,
         'candidate_form': candidate_form
