@@ -3,8 +3,8 @@
 from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
-from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
+from django.contrib.auth.views import logout_then_login
 
 from candidates.views import update_candidate
 from coding_problems.views import coding_problem, CodingProblemListView
@@ -23,11 +23,13 @@ urlpatterns = [
 
     url(
         r'^problems/$',
-        login_required(CodingProblemListView.as_view()),
+        CodingProblemListView.as_view(),
         name='coding-problem-list'),
 
     url(r'^accounts/login/$', TemplateView.as_view(template_name='login.html')),
     url(r'^accounts/profile/$', update_candidate, name='account-profile'),
+
+    url(r"^accounts/logout/$", logout_then_login, name="logout"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + \
     static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

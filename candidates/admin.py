@@ -15,6 +15,11 @@ class CodeSubmissionInline(admin.StackedInline):
     def has_add_permission(self, obj):
         return False
 
+    class Media:
+        css = {
+            "all": ("css/admin/codesubmission.css",)
+        }
+
 
 class CandidateInline(admin.StackedInline):
     model = Candidate
@@ -22,6 +27,7 @@ class CandidateInline(admin.StackedInline):
 
 class ExtendedUserAdmin(UserAdmin):
     list_display = list(UserAdmin.list_display) + ['get_level', 'get_status']
+    list_filter = ['is_staff', 'candidate__status', 'candidate__level']
     inlines = [CandidateInline, CodeSubmissionInline]
 
     def get_level(self, obj):

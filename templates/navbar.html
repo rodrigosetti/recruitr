@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{% url "coding-problem-list" %}">
+                    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                    {% trans "Challenges" %}
+                </a>
+            </li>
+        </ul>
+        {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url "account-profile" %}" class="navbar-link">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        {% trans "Profile" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "logout" %}?next={{ request.path }}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        {% trans "Logout" %}
+                    </a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>

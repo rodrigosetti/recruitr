@@ -1,0 +1,6 @@
+
+.field-code .readonly {
+    font-family: monospace;
+    white-space: pre;
+    unicode-bidi: embed;
+}

@@ -17,6 +17,7 @@ def determine_upload_location(instance, filename):
     _, extension = os.path.splitext(filename)
     return os.path.join("resumes", instance.user.username + extension)
 
+
 class Candidate(models.Model):
     LEVEL_CHOICES = (
         ("IN", "Intern"),

@@ -3,16 +3,11 @@
 {% load i18n %}
 
 {% block content %}
-<ol class="breadcrumb">
-    <li>
-        <a href="{% url "coding-problem-list" %}">{% trans "Challenges" %}</a>
-    </li>
-    <li class="pull-right">
-        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
-    </li>
-</ol>
+{% include "navbar.html" %}
 
-<h1>{% trans "Challenges" %}</h1>
+<div class="page-header">
+    <h1>{% trans "Challenges" %}</h1>
+</div>
 
 <div class="list-group">
     {% for problem in object_list %}

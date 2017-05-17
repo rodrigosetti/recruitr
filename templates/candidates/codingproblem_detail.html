@@ -3,17 +3,11 @@
 {% load i18n %}
 
 {% block content %}
-<ol class="breadcrumb">
-    <li>
-        <a href="{% url "coding-problem-list" %}">{% trans "Challenges" %}</a>
-    </li>
-    <li class="active">{{ problem.title }}</li>
-    <li class="pull-right">
-        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
-    </li>
-</ol>
+{% include "navbar.html" %}
 
-<h1>{{ problem.title }}</h1>
+<div class="page-header">
+    <h1>{{ problem.title }}</h1>
+</div>
 
 <p>
     {{ problem.statement|linebreaks }}
@@ -47,73 +41,84 @@
 {% endif %}
 
 <hr/>
-<h2>{% trans "Submit your solution" %}</h2>
+{% if user.is_authenticated %}
+    <h2>{% trans "Submit your solution" %}</h2>
 
-<form class="form-horizontal" role="form" method="post">
-  {% csrf_token %}
-  {% with submission_form as form %}
-    {% include 'bootstrap_form.html' %}
-  {% endwith %}
+    <form class="form-horizontal" role="form" method="post">
+    {% csrf_token %}
+    {% with submission_form as form %}
+        {% include 'bootstrap_form.html' %}
+    {% endwith %}
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">{% trans "Submit Solution" %}</button>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">{% trans "Submit Solution" %}</button>
+        </div>
     </div>
-  </div>
-</form>
+    </form>
 
-{% if submissions %}
-    <hr/>
-    <h2>{% trans "Submission history" %}</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{% trans "time" %}</th>
-                <th>{% trans "language" %}</th>
-                <th>{% trans "status" %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for submission in submissions %}
-            <tr>
-                <td>{{ submission.submission_time }}</td>
-                <td>{{ submission.get_language_display }}</td>
-                <td>
-                    {% if submission.status == "S" %}
-                    <span class="glyphicon glyphicon-ok"  aria-hidden="true"></span>
-                    {% elif submission.status == "E" %}
-                    <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
-                    {% elif submission.status == "L" %}
-                    <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
-                    {% elif submission.status == "F" %}
-                    <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
-                    {% elif submission.status == "Q" %}
-                    <span class="glyphicon glyphicon-refresh"  aria-hidden="true"></span>
-                    {% elif submission.status == "R" %}
-                    <span class="glyphicon glyphicon-refresh"  aria-hidden="true"></span>
-                    {% endif %}
+    {% if submissions %}
+        <hr/>
+        <h2>{% trans "Submission history" %}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans "time" %}</th>
+                    <th>{% trans "language" %}</th>
+                    <th>{% trans "status" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.submission_time }}</td>
+                    <td>{{ submission.get_language_display }}</td>
+                    <td>
+                        {% if submission.status == "S" %}
+                        <span class="glyphicon glyphicon-ok"  aria-hidden="true"></span>
+                        {% elif submission.status == "E" %}
+                        <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                        {% elif submission.status == "L" %}
+                        <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                        {% elif submission.status == "F" %}
+                        <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span>
+                        {% elif submission.status == "Q" %}
+                        <span class="glyphicon glyphicon-refresh"  aria-hidden="true"></span>
+                        {% elif submission.status == "R" %}
+                        <span class="glyphicon glyphicon-refresh"  aria-hidden="true"></span>
+                        {% endif %}
 
-                    {{ submission.get_status_display }}
-                </td>
-                <td>
-                    {% if submission.error_output %}
-                    <a class="btn btn-default" role="button" data-toggle="collapse" href="#error-{{ submission.id }}">
-                        {% trans "error output" %}
-                    </a>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr class="collapse" id="error-{{ submission.id }}">
-                <td colspan="4">
-                    <div class="well">
-                        {{ submission.error_output }}
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
+                        {{ submission.get_status_display }}
+                    </td>
+                    <td>
+                        {% if submission.error_output %}
+                        <a class="btn btn-default" role="button" data-toggle="collapse" href="#error-{{ submission.id }}">
+                            {% trans "error output" %}
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="collapse" id="error-{{ submission.id }}">
+                    <td colspan="4">
+                        <div class="well">
+                            {{ submission.error_output }}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+ {% else %}
+
+    <p class="text-center">
+        <a class="btn btn-lg btn-social btn-github" href="{% url "social:begin" "github" %}?next={{ request.path }}">
+            <span class="fa fa-github"></span>
+            {% trans "Login with Github to submit your solution!" %}
+        </a>
+    </p>
+
+ {% endif %}
 
 {% endblock %}
 s

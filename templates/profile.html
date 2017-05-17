@@ -3,14 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-<ol class="breadcrumb">
-    <li>
-        <a href="{% url "coding-problem-list" %}">{% trans "Problems" %}</a>
-    </li>
-    <li class="pull-right">
-        <a href="{% url "account-profile" %}" class="navbar-link">{% trans "Profile" %}</a>
-    </li>
-</ol>
+{% include "navbar.html" %}
 
 <form enctype="multipart/form-data"
       class="form-horizontal"
