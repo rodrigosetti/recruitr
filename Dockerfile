@@ -11,6 +11,11 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y perl
 RUN apt-get install -y python3
 RUN apt-get install -y scala
+RUN apt-get install -y ruby
+RUN apt-get install -y php
+
+COPY container-utils/run-* /usr/bin/
+RUN chmod +x /usr/bin/run-*
 
 RUN mkdir /workspace
 

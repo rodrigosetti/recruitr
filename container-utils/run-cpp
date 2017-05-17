@@ -1,0 +1,2 @@
+#! /bin/sh
+g++ -o program $1 && ./program

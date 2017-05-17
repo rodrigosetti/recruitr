@@ -25,8 +25,8 @@ class CodingProblem(models.Model):
 class InputOutput(models.Model):
     problem = models.ForeignKey(CodingProblem)
     example = models.BooleanField(default=False)
-    input = models.TextField()
-    output = models.TextField()
+    input = models.TextField(blank=True, null=False)
+    output = models.TextField(blank=True, null=False)
 
     def __str__(self):
         return str(self.problem) + " case" + (" (example)" if self.example else "")
@@ -34,8 +34,17 @@ class InputOutput(models.Model):
 
 class CodeSubmission(models.Model):
     LANGUAGE_CHOICES = (
+        ("C",  "C"),
+        ("CP", "C++"),
+        ("HA", "Haskell"),
+        ("JA", "Java"),
+        ("JS", "Javascript (Node)"),
+        ("PE", "Perl"),
+        ("PH", "PHP"),
         ("PY", "Python"),
-        ("JS", "Javascript (Node)")
+        ("RU", "Ruby"),
+        ("SC", "Scala"),
+        ("SH", "Shell (Bash)"),
     )
 
     STATUS_CHOICES = (

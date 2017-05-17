@@ -31,12 +31,45 @@ def run_code(code, language, stdin):
     Returns:
       Tuple: (stdout, stderr, is_timeout)
     """
+
+    read_only = True
     if language == 'PY':
         interpreter = ['python3']
-        code_filename = 'input.py'
+        filename = 'code.py'
     elif language == 'JS':
         interpreter = ['nodejs']
-        code_filename = 'input.js'
+        filename = 'code.js'
+    elif language == 'HA':
+        interpreter = ['runhaskell']
+        filename = 'code.hs'
+        read_only = False
+    elif language == 'PE':
+        interpreter = ['perl']
+        filename = 'code.pl'
+    elif language == 'RU':
+        interpreter = ['ruby']
+        filename = 'code.rb'
+    elif language == 'SH':
+        interpreter = ['bash']
+        filename = 'code.sh'
+    elif language == 'SC':
+        interpreter = ['scala']
+        filename = 'code.scala'
+    elif language == 'C':
+        interpreter = ['run-c']
+        filename = 'code.c'
+        read_only = False
+    elif language == 'CP':
+        interpreter = ['run-cpp']
+        filename = 'code.cpp'
+        read_only = False
+    elif language == 'JA':
+        interpreter = ['run-java']
+        filename = 'Main.java'
+        read_only = False
+    elif language == 'PH':
+        interpreter = ['php']
+        filename = 'code.php'
     else:
         raise ValueError("language not supported: %s" % language)
 
@@ -48,11 +81,16 @@ def run_code(code, language, stdin):
     try:
         command = ['gtimeout', '-s', 'SIGKILL', '60',
                    'docker', 'run', '--rm', '--name', container_name,
-                   '--network=none', '--read-only', '--interactive',
-                   '--volume=%s:/workspace/%s:ro' % (host_code_filename, code_filename),
-                   IMAGE_NAME]
+                   '--network=none', '--interactive',
+                   f'--volume={host_code_filename}:/workspace/{filename}:ro']
+
+        if read_only:
+            command.append('--read-only')
+
+        command.append(IMAGE_NAME)
+
         command.extend(interpreter)
-        command.append(code_filename)
+        command.append(filename)
 
         logger.info(' '.join(command))
 
