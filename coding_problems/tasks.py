@@ -4,6 +4,7 @@ from celery.utils.log import get_task_logger
 from subprocess import Popen, PIPE
 import os
 from itertools import count
+import platform
 import uuid
 
 logger = get_task_logger(__name__)
@@ -18,6 +19,9 @@ def kill_and_remove(container_name):
                   stdout=PIPE, stderr=PIPE)
         if p.wait() != 0:
             raise RuntimeError(p.stderr.read())
+
+
+timeout_cmd = 'gtimeout' if platform.system() == 'Darwin' else 'timeout'
 
 
 def run_code(code, language, stdin):
@@ -82,7 +86,7 @@ def run_code(code, language, stdin):
         f.write(code)
 
     try:
-        command = ['gtimeout', '-s', 'SIGKILL', '60',
+        command = [timeout_cmd, '-s', 'SIGKILL', '60',
                    'docker', 'run', '--rm', '--name', container_name,
                    '--network=none', '--interactive',
                    '--volume={}:/workspace/{}:ro'.format(host_code_filename, filename)]
