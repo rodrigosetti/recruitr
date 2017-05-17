@@ -70,6 +70,9 @@ def run_code(code, language, stdin):
     elif language == 'PH':
         interpreter = ['php']
         filename = 'code.php'
+    elif language == 'RA':
+        interpreter = ['racket']
+        filename = 'code.rkt'
     else:
         raise ValueError("language not supported: %s" % language)
 

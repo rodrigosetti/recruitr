@@ -42,6 +42,7 @@ class CodeSubmission(models.Model):
         ("PE", "Perl"),
         ("PH", "PHP"),
         ("PY", "Python"),
+        ("RA", "Racket"),
         ("RU", "Ruby"),
         ("SC", "Scala"),
         ("SH", "Shell (Bash)"),

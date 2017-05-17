@@ -13,6 +13,7 @@ RUN apt-get install -y python3
 RUN apt-get install -y scala
 RUN apt-get install -y ruby
 RUN apt-get install -y php
+RUN apt-get install -y racket
 
 COPY container-utils/run-* /usr/bin/
 RUN chmod +x /usr/bin/run-*
