@@ -135,49 +135,89 @@ def judge_code_submission(code_submission_id):
     # create a temp folder with all input files
     for ion, input_output in enumerate(code_submission.problem.inputoutput_set.all()):
         logger.info("Running input/output: %s" % input_output)
-        (stdout, stderr, is_timeout) = run_code(code_submission.code,
-                                                code_submission.language,
-                                                input_output.input.encode('utf-8'))
 
-        code_submission.error_output = stderr.decode('utf-8')[-1000:]
+        for t in range(input_output.times):
 
-        if is_timeout:
-            logger.info("timeout")
-            code_submission.status = 'T'  # status=TIMEOUT
-            break
-        elif stderr:
-            logger.info("error")
-            code_submission.status = 'E'  # status=ERROR
-            break
-        elif len(stdout) > 1024*1024*5:
-            logger.info("output too large")
-            code_submission.status = 'L'  # status=OUTPUT TOO LARGE
-            break
-        else:
-            output_lines = stdout.decode('utf-8').strip().splitlines()
-            expected_lines = input_output.output.strip().splitlines()
-            n_output = len(output_lines)
-            n_expected = len(expected_lines)
+            if input_output.dynamic_input:
+                (stdout, stderr, is_timeout) = run_code(input_output.input, 'PY', b'')
+                if is_timeout:
+                    logger.error("Unexpected timeout when evaluating dynamic input of %s" % input_output)
+                    continue
+                if stderr:
+                    logger.error("Unexpected error when evaluating dynamic input of %s" % input_output)
+                    logger.error(stderr)
+                    continue
 
-            if n_output != n_expected:
-                failure = True
-                code_submission.error_output = "expected {} lines, but got {}, of case #{}{}".format(n_expected, n_output, ion+1, " (example)" if input_output.example else "")
-                code_submission.status = 'F'  # status=FAILURE
+                input_text = stdout.decode('utf-8')
+            else:
+                input_text = input_output.input
+
+            input_bytes = input_text.encode('utf-8')
+
+            if input_output.dynamic_output:
+                (stdout, stderr, is_timeout) = run_code(input_output.output, 'PY', input_bytes)
+                if is_timeout:
+                    logger.error("Unexpected timeout when evaluating dynamic output of %s" % input_output)
+                    continue
+                if stderr:
+                    logger.error("Unexpected error when evaluating dynamic output of %s" % input_output)
+                    logger.error(stderr)
+                    continue
+
+                output_text = stdout.decode('utf-8')
+            else:
+                output_text = input_output.output
+
+            (stdout, stderr, is_timeout) = run_code(code_submission.code,
+                                                    code_submission.language,
+                                                    input_bytes)
+
+            code_submission.error_output = stderr.decode('utf-8')[-1000:]
+
+            if is_timeout:
+                logger.info("timeout")
+                code_submission.status = 'T'  # status=TIMEOUT
                 break
+            elif stderr:
+                logger.info("error")
+                code_submission.status = 'E'  # status=ERROR
+                break
+            elif len(stdout) > 1024*1024*5:
+                logger.info("output too large")
+                code_submission.status = 'L'  # status=OUTPUT TOO LARGE
+                break
+            else:
+                output_lines = stdout.decode('utf-8').strip().splitlines()
+                expected_lines = output_text.strip().splitlines()
+                n_output = len(output_lines)
+                n_expected = len(expected_lines)
 
-            failure = False
-            for n, output_line, expected_line in zip(count(1), output_lines, expected_lines):
-                if output_line.strip() != expected_line:
-                    logger.info("failure")
+                if n_output != n_expected:
                     failure = True
-                    code_submission.error_output = "mismatch at line {}, of case #{}{}".format(n, ion+1, " (example)" if input_output.example else "")
+                    code_submission.error_output = "expected {} lines, but got {}, of case #{}{}".format(n_expected, n_output, ion+1, " (example)" if input_output.example else "")
+                    code_submission.status = 'F'  # status=FAILURE
                     break
 
-            if failure:
-                code_submission.status = 'F'  # status=FAILURE
-                break
+                failure = False
+                for n, output_line, expected_line in zip(count(1), output_lines, expected_lines):
+                    logger.debug("\"{}\" == \"{}\"".format(output_line, expected_line))
 
-    else:
+                    if output_line.strip() != expected_line:
+                        logger.info("failure")
+                        failure = True
+                        code_submission.error_output = "mismatch at line {}, of case #{}{}".format(n, ion+1, " (example)" if input_output.example else "")
+                        break
+
+                if failure:
+                    code_submission.status = 'F'  # status=FAILURE
+                    break
+
+        if code_submission.status != 'R':
+            # not running anymore. don't move to next input_output
+            break
+
+    # if still running: mark as success
+    if code_submission.status == 'R':
         logger.info("success")
         code_submission.status = 'S'  # status=SUCCESS
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 
 
@@ -27,6 +28,14 @@ class InputOutput(models.Model):
     example = models.BooleanField(default=False)
     input = models.TextField(blank=True, null=False)
     output = models.TextField(blank=True, null=False)
+
+    times = models.PositiveSmallIntegerField(default=1,
+                                             help_text=_("Number of times to evaluate this case, applicable only if input or output are dynamic"))
+
+    dynamic_input = models.BooleanField(default=False,
+                                        help_text=_("if input is dynamic, it should be a Python script that will generate the actual input"))
+    dynamic_output = models.BooleanField(default=False,
+                                         help_text=_("if output is dynamic, it should be the correct solution implemented in Python"))
 
     def __str__(self):
         return str(self.problem) + " case" + (" (example)" if self.example else "")
