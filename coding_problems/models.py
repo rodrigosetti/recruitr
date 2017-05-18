@@ -37,6 +37,11 @@ class InputOutput(models.Model):
     dynamic_output = models.BooleanField(default=False,
                                          help_text=_("if output is dynamic, it should be the correct solution implemented in Python"))
 
+    def save(self):
+        self.input = self.input.replace("\r\n", "\n")
+        self.output = self.output.replace("\r\n", "\n")
+        super(InputOutput, self).save()
+
     def __str__(self):
         return str(self.problem) + " case" + (" (example)" if self.example else "")
 
