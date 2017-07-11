@@ -14,3 +14,19 @@ run in a docker container, therefore very secure.
 Recruitr is built in [Django](https://www.djangoproject.com), and
 uses [Celery](http://www.celeryproject.org) for dispatching the code running
 tasks asynchronously.
+
+#### oauth setup
+
+Get the api client id and secret key by registering your app on the platform whose  oauth you want to use:
+ * [Google](https://console.developers.google.com/start)
+ * [Github](https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/)
+
+After you have them   just add  to
+ 
+ 
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxxx'
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxxx'
+
+    SOCIAL_AUTH_GITHUB_KEY = 'xxxx'
+    SOCIAL_AUTH_GITHUB_SECRET = 'xxxx'
+

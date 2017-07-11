@@ -57,10 +57,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxxx'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxxx'
+
 SOCIAL_AUTH_GITHUB_KEY = 'xxxx'
 SOCIAL_AUTH_GITHUB_SECRET = 'xxxx'
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend'
 )
