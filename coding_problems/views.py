@@ -1,5 +1,3 @@
-from urllib.parse import urlparse
-
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
@@ -8,6 +6,11 @@ from django.contrib.auth.views import redirect_to_login
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.shortcuts import resolve_url
+
+try:
+    from urllib.parse import urlparse
+except ImportError:
+     from urlparse import urlparse
 
 from .tasks import judge_code_submission
 from .forms import CodeSubmissionForm
