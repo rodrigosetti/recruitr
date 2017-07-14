@@ -1,4 +1,4 @@
-recruitr
+Recruitr
 ========
 
 Recruitr is a modern online judge tool.
@@ -15,15 +15,16 @@ Recruitr is built in [Django](https://www.djangoproject.com), and
 uses [Celery](http://www.celeryproject.org) for dispatching the code running
 tasks asynchronously.
 
-#### oauth setup
+#### OAuth setup
 
-Get the api client id and secret key by registering your app on the platform whose  oauth you want to use:
+Get the api client id and secret key by registering your app on the platform whose  oauth you want to use, like:
  * [Google](https://console.developers.google.com/start)
  * [Github](https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/)
 
-After you have them   just add  to
- 
- 
+After you have them just add to `settings.py` in `recruitr` app.
+
+For example:
+
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxxx'
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxxx'
 
