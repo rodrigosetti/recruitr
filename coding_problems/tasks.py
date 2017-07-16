@@ -10,7 +10,7 @@ import uuid
 logger = get_task_logger(__name__)
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-IMAGE_NAME = 'code-runner'
+IMAGE_NAME = 'runner'
 
 
 def kill_and_remove(container_name):
@@ -100,6 +100,7 @@ def run_code(code, language, stdin):
         command.append(filename)
 
         logger.info(' '.join(command))
+
 
         p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
