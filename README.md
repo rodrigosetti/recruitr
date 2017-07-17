@@ -14,3 +14,9 @@ run in a docker container, therefore very secure.
 Recruitr is built in [Django](https://www.djangoproject.com), and
 uses [Celery](http://www.celeryproject.org) for dispatching the code running
 tasks asynchronously.
+
+### Tests
+
+To run the tests you can execute the following command.
+
+    python manage.py test
