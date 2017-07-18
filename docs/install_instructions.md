@@ -31,6 +31,14 @@ For setting up the project and running the server:
     pip install -r requirements.txt
     ```
 
+- Set up SECRET_KEY
+
+    ```
+    chmod 700 utils/gen_key.sh
+    ./utils/gen_key.sh
+    ```
+    This will create a local_settings.py file.
+
 - Run Database migrations
     ```
     python manage.py makemigrations candidates
@@ -63,7 +71,7 @@ Logins are maintained via OAuth providers (currently Google and Github). For dev
 - [Github](https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/)
 
 
-After you have them just add to `settings.py` in `recruitr` app.
+After you have them just add to `local_settings.py` in `recruitr` app.
 
 For example:
 

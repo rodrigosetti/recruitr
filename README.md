@@ -17,11 +17,11 @@ tasks asynchronously.
 
 #### OAuth setup
 
-Get the api client id and secret key by registering your app on the platform whose  oauth you want to use, like:
+Get the api client id and secret key by registering your app on the platform whose oauth you want to use, like:
  * [Google](https://console.developers.google.com/start)
  * [Github](https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/)
 
-After you have them just add to `settings.py` in `recruitr` app.
+After you have them just add to `local_settings.py` in `recruitr` app.
 
 For example:
 
