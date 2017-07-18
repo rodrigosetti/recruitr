@@ -6,7 +6,7 @@ Before installation of the project, you need to have the following softwares ins
 
 - [Git](https://git-scm.com/downloads)
     - Ubuntu/Debian: `sudo apt-get install git`
-    - Windows: 
+    - Windows:[download](https://www.git-scm.com/download/win)
 - Python (3.x +)
 - [Virtualenv](https://virtualenv.pypa.io/) 
     - `[sudo] pip install virtualenv`
@@ -44,6 +44,14 @@ For setting up the project and running the server:
 
     ```
 
+- Set up SECRET_KEY
+
+    ```
+    chmod 700 utils/gen_key.sh
+    ./utils/gen_key.sh
+    ```
+    This will create a local_settings.py file.
+
 - Run Database migrations
     ```
     python manage.py makemigrations candidates
@@ -76,7 +84,7 @@ Logins are maintained via OAuth providers (currently Google and Github). For dev
 - [Github](https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/)
 
 
-After you have them just add to `settings.py` in `recruitr` app.
+After you have them just add to `local_settings.py` in `recruitr` app.
 
 For example:
 
