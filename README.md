@@ -30,4 +30,10 @@ For example:
 
     SOCIAL_AUTH_GITHUB_KEY = 'xxxx'
     SOCIAL_AUTH_GITHUB_SECRET = 'xxxx'
+    
+### Tests
 
+To run the tests you can execute the following command.
+
+    python manage.py test
+    
