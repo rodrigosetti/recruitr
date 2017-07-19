@@ -6,6 +6,7 @@ Before installation of the project, you need to have the following softwares ins
 
 - [Git](https://git-scm.com/downloads)
     - Ubuntu/Debian: `sudo apt-get install git`
+    - Windows: 
 - Python (3.x +)
 - [Virtualenv](https://virtualenv.pypa.io/) 
     - `[sudo] pip install virtualenv`
@@ -13,8 +14,11 @@ Before installation of the project, you need to have the following softwares ins
     - `pip install celery`
 - [Redis](https://redis.io/)
     - Ubuntu/Debian: `sudo apt-get install redis-server`
+    - Windows: Follow the instructions [here](https://github.com/ServiceStack/redis-windows#current-version-30503-june-28-2016) to setup redis.
 - [Docker](https://www.docker.com/)
-    - Complete install instruction [here](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-docker-ce).
+    - Complete install instruction for: 
+        - [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-docker-ce)
+        - [Windows](https://docs.docker.com/docker-for-windows/install/)
 
 ### Setting up environment
 
@@ -24,11 +28,20 @@ For setting up the project and running the server:
     - `git clone https://github.com/hackions/recruitr`
 
 - Create an isolated python environment and install python dependencies.
+    ###### Linux
     ```
     cd recruitr
     virtualenv venv
     source venv/bin/activate  # run this command everytime before working on project
     pip install -r requirements.txt
+    ```
+    ###### Windows
+    ```
+    cd recruitr
+    virtualenv venv
+    venv\Scripts\activate.bat  # run this command everytime before working on project
+    pip install -r requirements.txt
+
     ```
 
 - Run Database migrations
