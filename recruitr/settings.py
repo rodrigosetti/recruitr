@@ -22,13 +22,20 @@ MEDIA_URL = '/media/'
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4ga)*r8d84b8$b!^w^^zpymt-fgxjqkjp2ov88pdqkm%b5+=h6'
+SECRET_KEY = 'xxxx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
 
 # Application definition
 
@@ -57,10 +64,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxxx'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxxx'
+
 SOCIAL_AUTH_GITHUB_KEY = 'xxxx'
 SOCIAL_AUTH_GITHUB_SECRET = 'xxxx'
 
+
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend'
 )
@@ -123,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 

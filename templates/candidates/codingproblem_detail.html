@@ -113,9 +113,15 @@
  {% else %}
 
     <p class="text-center">
+        <a class="btn btn-lg btn-social btn-google" href="{% url "social:begin" "google-oauth2" %}?next={{ request.path }}">
+            <span class="fa fa-google-plus"></span>
+            {% trans "Login with Google" %}
+        </a>
+    </p>
+    <p class="text-center">
         <a class="btn btn-lg btn-social btn-github" href="{% url "social:begin" "github" %}?next={{ request.path }}">
             <span class="fa fa-github"></span>
-            {% trans "Login with Github to submit your solution!" %}
+            {% trans "Login with Github" %}
         </a>
     </p>
 
