@@ -36,4 +36,3 @@ For example:
 To run the tests you can execute the following command.
 
     python manage.py test
-    
