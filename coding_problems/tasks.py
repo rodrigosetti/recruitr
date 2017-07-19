@@ -101,7 +101,6 @@ def run_code(code, language, stdin):
 
         logger.info(' '.join(command))
 
-
         p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
         (stdout, stderr) = p.communicate(stdin)
