@@ -34,6 +34,6 @@ For example:
 ### Tests
 
 To run the tests you can execute the following command.
-```python
+```shell
     python manage.py test
 ```

@@ -10,7 +10,7 @@ from django.shortcuts import resolve_url
 try:
     from urllib.parse import urlparse
 except ImportError:
-     from urlparse import urlparse
+    from urlparse import urlparse
 
 from .tasks import judge_code_submission
 from .forms import CodeSubmissionForm
