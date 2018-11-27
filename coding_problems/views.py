@@ -60,8 +60,6 @@ def coding_problem(request, slug):
                              _('Your code was successfully submitted'))
             return redirect('coding-problem-detail', slug)
         else:
-            messages.success(request,
-                             _('Your code was successfully submitted'))
             messages.error(request,
                            _('Please correct the error below.'))
     else:
