@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-LABEL MAINTAINER rsetti@yahoo-inc.com
+LABEL MAINTAINER rodrigosetti@gmail.com
 
 RUN apt-get update && apt-get -y upgrade
 
