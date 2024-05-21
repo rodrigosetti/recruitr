@@ -33,7 +33,7 @@ python3-openid==3.1.0
 python-openid==2.2.5
 pytz==2017.2
 redis==4.5.4
-requests==2.31.0
+requests==2.32.0
 requests-oauthlib==0.8.0
 scandir==1.5
 simplegeneric==0.8.1
